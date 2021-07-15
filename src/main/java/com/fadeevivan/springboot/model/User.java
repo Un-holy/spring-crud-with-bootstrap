@@ -1,12 +1,21 @@
 package com.fadeevivan.springboot.model;
 
 import org.springframework.lang.NonNull;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,8 +24,7 @@ public class User {
 	@NonNull
 	@Column(
 		name = "first_name",
-		nullable = false,
-		unique = true
+		nullable = false
 	)
 	private String firstName;
 
@@ -41,6 +49,12 @@ public class User {
 		nullable = false
 	)
 	private String password;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "users_roles",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
 
 	public User() {
 	}
@@ -84,13 +98,42 @@ public class User {
 		this.age = age;
 	}
 
-	@NonNull
+	@Override
 	public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(@NonNull String password) {
 		this.password = password;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public void addRole(Role role) {
+		roles.add(role);
+	}
+
+	public void removeRole(Role role) {
+		roles.remove(role);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof User)) return false;
+		User user = (User) o;
+		return id == user.id && age == user.age && firstName.equals(user.firstName) && lastName.equals(user.lastName) && password.equals(user.password) && roles.equals(user.roles);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, firstName, lastName, age, password, roles);
 	}
 
 	@Override
@@ -102,5 +145,37 @@ public class User {
 				", age=" + age +
 				", password='" + password + '\'' +
 				'}';
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Collection<? extends GrantedAuthority> authorities = roles.stream()
+				.map(r -> new SimpleGrantedAuthority(r.getRoleName())).collect(Collectors.toSet());
+		return authorities;
+	}
+
+	@Override
+	public String getUsername() {
+		return firstName;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 }

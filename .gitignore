@@ -40,3 +40,4 @@ build/
 /springboot.iml
 /target
 /HELP.md
+/src/main/resources/note.txt

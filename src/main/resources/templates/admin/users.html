@@ -5,6 +5,7 @@
 	<title>Users</title>
 </head>
 <body>
+	<div th:replace="~{logout.html::logout}"/>
 	<div th:switch="${users}">
 		<h2 th:case="null">Users not found!</h2>
 		<div th:case="*">

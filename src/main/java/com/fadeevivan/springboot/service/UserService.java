@@ -1,34 +1,19 @@
 package com.fadeevivan.springboot.service;
 
 import com.fadeevivan.springboot.model.User;
-import com.fadeevivan.springboot.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class UserService {
-	private final UserRepository userRepository;
+public interface UserService {
+	User findById(long id);
 
-	@Autowired
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+	List<User> findAll();
 
-	public User findById(long id) {
-		return userRepository.getById(id);
-	}
+	User saveUser(User user);
 
-	public List<User> findAll() {
-		return userRepository.findAll();
-	}
+	void deleteById(long id);
 
-	public User saveUser(User user) {
-		return userRepository.save(user);
-	}
+	User findUserByFirstName(String firstName);
 
-	public void deleteById(long id) {
-		userRepository.deleteById(id);
-	}
+	User saveUserWithRoles(User user, String[] roles);
 }
