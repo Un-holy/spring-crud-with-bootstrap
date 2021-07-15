@@ -22,37 +22,23 @@ public class User implements UserDetails {
 	private long id;
 
 	@NonNull
-	@Column(
-		name = "first_name",
-		nullable = false
-	)
+	@Column(name = "first_name", nullable = false, unique = true)
 	private String firstName;
 
 	@NonNull
-	@Column(
-		name = "last_name",
-		nullable = false
-	)
+	@Column(name = "last_name", nullable = false)
 	private String lastName;
 
 	@NonNull
-	@Column(
-		name = "age",
-		nullable = false
-
-	)
+	@Column(name = "age", nullable = false)
 	private byte age;
 
 	@NonNull
-	@Column(
-		name = "password",
-		nullable = false
-	)
+	@Column(name = "password", nullable = false)
 	private String password;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "users_roles",
-			joinColumns = @JoinColumn(name = "user_id"),
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
@@ -128,7 +114,8 @@ public class User implements UserDetails {
 		if (this == o) return true;
 		if (!(o instanceof User)) return false;
 		User user = (User) o;
-		return id == user.id && age == user.age && firstName.equals(user.firstName) && lastName.equals(user.lastName) && password.equals(user.password) && roles.equals(user.roles);
+		return id == user.id && age == user.age && firstName.equals(user.firstName)
+				&& lastName.equals(user.lastName) && password.equals(user.password) && roles.equals(user.roles);
 	}
 
 	@Override

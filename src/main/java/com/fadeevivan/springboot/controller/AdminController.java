@@ -1,22 +1,26 @@
 package com.fadeevivan.springboot.controller;
 
+import com.fadeevivan.springboot.model.Role;
 import com.fadeevivan.springboot.model.User;
-import com.fadeevivan.springboot.service.UserServiceImpl;
+import com.fadeevivan.springboot.service.RoleService;
+import com.fadeevivan.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class AdminController {
-	private final UserServiceImpl userService;
+	private final UserService userService;
+	private final RoleService roleService;
 
 	@Autowired
-	public AdminController(UserServiceImpl userService) {
+	public AdminController(UserService userService, RoleService roleService) {
 		this.userService = userService;
+		this.roleService = roleService;
 	}
 
 	@GetMapping("admin/users")
@@ -26,14 +30,16 @@ public class AdminController {
 	}
 
 	@GetMapping("admin/users/new")
-	public String createUserFrom(User user) {
+	public String createUserFrom(User user, Model model) {
+		model.addAttribute("roleAdmin", roleService.findRoleById(1));
+		model.addAttribute("roleUser", roleService.findRoleById(2));
+
 		return "admin/users/new";
 	}
 
 	@PostMapping("admin/users/new")
-	public String createNewUser(User user, HttpServletRequest request) {
-		String[] roles = request.getParameterValues("role");
-		userService.saveUserWithRoles(user, roles);
+	public String createNewUser(User user) {
+		userService.saveUser(user);
 		return "redirect:/admin/users";
 	}
 

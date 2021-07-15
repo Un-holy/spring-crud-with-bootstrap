@@ -6,11 +6,13 @@ import com.fadeevivan.springboot.repository.RoleRepository;
 import com.fadeevivan.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
 	private final RoleRepository roleRepository;
@@ -45,13 +47,5 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findUserByFirstName(String firstName) {
 		return userRepository.findUserByFirstName(firstName);
-	}
-
-	@Override
-	public User saveUserWithRoles(User user, String[] roles) {
-		userRepository.save(user);
-		Stream.of(roles).forEach(r -> user.addRole(roleRepository.findRoleByRoleName(r)));
-		userRepository.save(user);
-		return user;
 	}
 }

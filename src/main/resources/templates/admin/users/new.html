@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<title>Create new user</title>
@@ -25,12 +26,10 @@
 			<input type="text" th:field="*{password}" id="password" placeholder="Password">
 		</div>
 		<div>
-			<label for="chkAdmin">ADMIN</label>
-			<input type="checkbox" value="ROLE_ADMIN" id="chkAdmin" name="role">
+			<input type="checkbox" th:field="*{roles}" th:text="ADMIN" th:value="${roleAdmin.getId()}">
 		</div>
 		<div>
-			<label for="chkUser">USER</label>
-			<input type="checkbox" value="ROLE_USER" id="chkUser" name="role">
+			<input type="checkbox" th:field="*{roles}" th:text="USER" th:value="${roleUser.getId()}">
 		</div>
 		<div>
 			<input type="submit" value="Create new">

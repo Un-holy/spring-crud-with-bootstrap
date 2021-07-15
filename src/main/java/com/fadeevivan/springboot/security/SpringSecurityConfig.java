@@ -14,23 +14,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
-	UserDetailsService userDetailsService;
+	private UserDetailsService userDetailsService;
 
 	@Autowired
 	public void setUserDetailsService(UserDetailsService userDetailsService) {
 		this.userDetailsService = userDetailsService;
 	}
-
-	//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.inMemoryAuthentication()
-//				.withUser("user").password("{noop}100").roles("USER")
-//				.and()
-//				.withUser("admin").password("{noop}100").roles("USER", "ADMIN");
-//	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

@@ -16,13 +16,18 @@ public class Role implements GrantedAuthority {
 	private long id;
 
 	@NonNull
-	@Column(
-		name = "role_name",
-		nullable = false
-	)
+	@Column(name = "role_name", nullable = false, unique = true)
 	private String roleName;
 
 	public Role() {
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public Role(@NonNull String roleName) {
