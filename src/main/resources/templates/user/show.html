@@ -5,7 +5,7 @@
 	<title>User</title>
 </head>
 <body>
-	<div th:replace="~{logout.html::logout}"/>
+	<div th:replace="~{navbar.html::logout}"/>
 	<h2>Hi, <span th:text="${user.firstName}"></span></h2>
 	<p>Name and surname:</p>
 	<p th:text="${user.firstName} + ' ' + ${user.lastName}">firstName + lastName</p>

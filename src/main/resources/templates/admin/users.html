@@ -1,44 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Users</title>
+	<link rel="stylesheet" href="/webjars/bootstrap/4.5.3/css/bootstrap.min.css">
+	<title>Users table</title>
 </head>
 <body>
-	<div th:replace="~{logout.html::logout}"/>
-	<div th:switch="${users}">
-		<h2 th:case="null">Users not found!</h2>
-		<div th:case="*">
-			<h2>Users</h2>
-			<table>
-				<thead>
-					<tr>
-						<th>First name</th>
-						<th>Last name</th>
-						<th>Age</th>
-						<th>Password</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="user : ${users}">
-						<td th:text="${user.id}">Id</td>
-						<td th:text="${user.firstName}">First name</td>
-						<td th:text="${user.lastName}">Last name</td>
-						<td th:text="${user.age}">Age</td>
-						<td th:text="${user.password}">Password</td>
-						<td><a th:href="@{/admin/users/{id}/edit(id=${user.getId()})}">Edit</a></td>
-						<td>
-							<form th:method="DELETE" th:action="@{/admin/users/{id}(id=${user.getId()})}" >
-								<input type="submit" value="Delete">
-							</form>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div>
-				<p><a href="/admin/users/new">Create new!</a></p>
-			</div>
-		</div>
-	</div>
+<div th:replace="~{navbar.html::logout}"/>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+	<li class="nav-item" role="presentation">
+		<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Главная</a>
+	</li>
+	<li class="nav-item" role="presentation">
+		<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Профиль</a>
+	</li>
+</ul>
+<div class="tab-content" id="myTabContent">
+	<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+	<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+</div>
+
+
+
+
+
+
+	<script src="webjars/jquery/3.5.1/jquery.min.js" ></script>
+	<script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 </body>
 </html>

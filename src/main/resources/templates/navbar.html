@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<body>
+<header th:fragment="logout">
+	<nav class="navbar navbar-dark bg-dark" th:fragment="navigation">
+		<div>
+			<span class="text-white font-weight-bold align-middle" th:text="${authUser.username}">Email</span>
+			<span class="text-white align-middle">with roles:</span>
+			<span th:each="role : ${roles}">
+				<span class="text-white font-weight-normal align-middle" th:text="${role}">authorities</span>
+			</span>
+		</div>
+		<div>
+			<a class="text-decoration-none text-secondary font-weight-bold" href="/logout">Logout</a>
+		</div>
+	</nav>
+</header>
+</body>
+</html>

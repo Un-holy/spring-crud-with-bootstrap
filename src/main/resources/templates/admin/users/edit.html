@@ -5,7 +5,7 @@
 	<title>Edit User</title>
 </head>
 <body>
-	<div th:replace="~{logout.html::logout}"/>
+	<div th:replace="~{navbar.html::logout}"/>
 	<h2>Edit user</h2>
 	<form th:method="PATCH" action="#" th:action="@{/admin/users/{id}/edit(id=${user.getId()})}" th:object="${user}">
 		<div>

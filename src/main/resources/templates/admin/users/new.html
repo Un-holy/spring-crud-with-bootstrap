@@ -6,7 +6,7 @@
 	<title>Create new user</title>
 </head>
 <body>
-	<div th:replace="~{logout.html::logout}"/>
+	<div th:replace="~{navbar.html::logout}"/>
 	<h2>Create new user:</h2>
 	<form method="POST" action="#" th:action="@{/admin/users/new}" th:object="${user}">
 		<div>
@@ -22,7 +22,6 @@
 			<input type="text" th:field="*{age}" id="Age" placeholder="age">
 		</div>
 		<div>
-			<label for="password">Password</label>
 			<input type="text" th:field="*{password}" id="password" placeholder="Password">
 		</div>
 		<div>

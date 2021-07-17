@@ -22,7 +22,7 @@ public class User implements UserDetails {
 	private long id;
 
 	@NonNull
-	@Column(name = "first_name", nullable = false, unique = true)
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
 
 	@NonNull
@@ -32,6 +32,10 @@ public class User implements UserDetails {
 	@NonNull
 	@Column(name = "age", nullable = false)
 	private byte age;
+
+	@NonNull
+	@Column(name = "e_mail", nullable = false, unique = true)
+	private String email;
 
 	@NonNull
 	@Column(name = "password", nullable = false)
@@ -82,6 +86,15 @@ public class User implements UserDetails {
 
 	public void setAge(byte age) {
 		this.age = age;
+	}
+
+	@NonNull
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(@NonNull String email) {
+		this.email = email;
 	}
 
 	@Override
@@ -143,7 +156,7 @@ public class User implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return firstName;
+		return email;
 	}
 
 	@Override

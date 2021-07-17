@@ -1,16 +1,17 @@
 package com.fadeevivan.springboot.controller;
 
-import com.fadeevivan.springboot.model.Role;
 import com.fadeevivan.springboot.model.User;
 import com.fadeevivan.springboot.service.RoleService;
 import com.fadeevivan.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
 
 @Controller
 public class AdminController {
@@ -24,8 +25,12 @@ public class AdminController {
 	}
 
 	@GetMapping("admin/users")
-	public String findAll(Model model) {
+	public String findAll(Model model, @AuthenticationPrincipal User authUser) {
+		Collection<String> roles = new HashSet<>();
+		authUser.getAuthorities().forEach(a -> roles.add(a.getAuthority().substring(5)));
 		model.addAttribute("users", userService.findAll());
+		model.addAttribute("authUser", authUser);
+		model.addAttribute("roles", roles);
 		return "admin/users";
 	}
 
@@ -33,7 +38,6 @@ public class AdminController {
 	public String createUserFrom(User user, Model model) {
 		model.addAttribute("roleAdmin", roleService.findRoleById(1));
 		model.addAttribute("roleUser", roleService.findRoleById(2));
-
 		return "admin/users/new";
 	}
 
@@ -58,6 +62,6 @@ public class AdminController {
 	@PatchMapping("admin/users/{id}/edit")
 	public String editUser(@ModelAttribute("users") User user, @PathVariable("id") long id) {
 		userService.saveUser(user);
-		return "redirect:/admin/users/";
+		return "redirect:/admin/users";
 	}
 }

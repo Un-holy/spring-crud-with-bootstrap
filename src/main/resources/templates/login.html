@@ -1,18 +1,26 @@
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title></title>
+	<link rel="stylesheet" href="/webjars/bootstrap/4.5.3/css/bootstrap.min.css">
+	<title>Login</title>
 </head>
 <body>
-<div>
-	<form method="post" action="/login">
-		<input name="j_username"/>
-		<input name="j_password"/>
-		<input type="submit"/>
-	</form>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-2 mx-auto">
+			<div>
+				<h3 class="h3"><b>Please sign in</b></h3>
+			</div>
+			<form class="form-group" method="post" action="/login">
+				<input type="text" class="form-control" name="j_username"/>
+				<input type="password" class="form-control" name="j_password"/>
+				<input class="btn btn-primary btn-block" type="submit" value="Sign in"/>
+			</form>
+		</div>
+	</div>
 </div>
+<script src="webjars/jquery/3.5.1/jquery.min.js" ></script>
+<script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 </body>
 </html>
