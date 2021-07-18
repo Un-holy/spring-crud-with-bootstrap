@@ -36,8 +36,9 @@ public class AdminController {
 
 	@GetMapping("admin/users/new")
 	public String createUserFrom(User user, Model model) {
-		model.addAttribute("roleAdmin", roleService.findRoleById(1));
-		model.addAttribute("roleUser", roleService.findRoleById(2));
+		model.addAttribute("roleAdmin", roleService.findRoleById(1L));
+		model.addAttribute("roleUser", roleService.findRoleById(2L));
+		System.out.println(roleService.findRoleById(1L));
 		return "admin/users/new";
 	}
 

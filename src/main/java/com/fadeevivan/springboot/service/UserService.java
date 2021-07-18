@@ -11,4 +11,5 @@ public interface UserService {
 	void deleteById(long id);
 	User findUserByFirstName(String firstName);
 	User findUserByEmail(String email);
+	User findUserByEmailWithRolesEager(String email);
 }

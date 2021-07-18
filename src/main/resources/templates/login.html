@@ -6,16 +6,16 @@
 	<title>Login</title>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container">
 	<div class="row">
-		<div class="col-md-2 mx-auto">
-			<div>
+		<div class=" col-sm-6 col-md-4 col-lg-3 mx-auto">
+			<div class="mt-5">
 				<h3 class="h3"><b>Please sign in</b></h3>
 			</div>
-			<form class="form-group" method="post" action="/login">
-				<input type="text" class="form-control" name="j_username"/>
-				<input type="password" class="form-control" name="j_password"/>
-				<input class="btn btn-primary btn-block" type="submit" value="Sign in"/>
+			<form class="form-group mt-2" method="post" action="/login">
+				<input type="text" class="form-control" name="j_username" placeholder="Email address"/>
+				<input type="password" class="form-control" name="j_password" placeholder="Password"/>
+				<input class="btn btn-primary btn-block mt-2" type="submit" value="Sign in"/>
 			</form>
 		</div>
 	</div>

@@ -1,10 +1,13 @@
 package com.fadeevivan.springboot.service;
 
 import com.fadeevivan.springboot.model.Role;
+import com.fadeevivan.springboot.model.User;
 import com.fadeevivan.springboot.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
 
 @Service
 @Transactional
