@@ -7,17 +7,105 @@
 </head>
 <body>
 <div th:replace="~{navbar.html::logout}"/>
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-	<li class="nav-item" role="presentation">
-		<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Главная</a>
-	</li>
-	<li class="nav-item" role="presentation">
-		<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Профиль</a>
-	</li>
-</ul>
-<div class="tab-content" id="myTabContent">
-	<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
-	<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+
+<div class="container-fluid">
+	<div class="row mt-3">
+		<div class="col-md-2 d-flex flex-column pl-0">
+			<!-- Начало первого (бокового) таблиста-->
+			<div class="nav flex-column nav-pills" id="aSide-menu" role="tablist" aria-orientation="vertical">
+				<a class="nav-link active" id="v-pills-admin-tab" data-toggle="pill" href="#v-pills-admin" role="tab" aria-controls="v-pills-admin" aria-selected="true">Admin</a>
+				<a class="nav-link" id="v-pills-user-tab" data-toggle="pill" href="#v-pills-user" role="tab" aria-controls="v-pills-user" aria-selected="false">User</a>
+			</div>
+		</div>
+		<!-- Контент бокового таблиста -->
+		<div class="col">
+			<row>
+				<div class="tab-content" id="aSide-menu-tabContent">
+					<!-- Страница Admin -->
+					<div class="tab-pane fade show active" id="v-pills-admin" role="tabpanel" aria-labelledby="v-pills-admin-tab">
+						<h2 class="font-weight-bold">Admin panel</h2>
+						<!-- Второй (основной) таблист -->
+						<ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+							<li class="nav-item" role="presentation">
+								<a class="nav-link active" id="usersTable-tab" data-toggle="tab" href="#usersTable" role="tab" aria-controls="usersTable" aria-selected="true">Users table</a>
+							</li>
+							<li class="nav-item" role="presentation">
+								<a class="nav-link" id="newUser-tab" data-toggle="tab" href="#newUser" role="tab" aria-controls="newUser" aria-selected="false">New User</a>
+							</li>
+						</ul>
+
+						<div class="row">
+							<div class="col">
+								<div class="tab-content" id="myTab">
+									<!-- Users Table -->
+									<div class="tab-pane fade show active" id="usersTable" role="tabpanel" aria-labelledby="usersTable-tab">
+										<div class="card w-100">
+											<h5 class="card-header h5">All users</h5>
+											<div class="card-body">
+												<table class="table table-hover w-100">
+													<thead>
+														<tr>
+															<th>ID</th>
+															<th>First name</th>
+															<th>Last name</th>
+															<th>Age</th>
+															<th>Email</th>
+															<th>Role</th>
+															<th>Edit</th>
+															<th>Delete</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="user : ${users}">
+															<td th:text="${user.id}">ID</td>
+															<td th:text="${user.firstName}">First name</td>
+															<td th:text="${user.lastName}">Last name</td>
+															<td th:text="${user.age}">Age</td>
+															<td th:text="${user.email}">Email</td>
+															<td>
+																<span th:each="role : ${user.roles}"><span th:text="${role} + ' '">Role</span></span>
+															</td>
+															<td><a class="btn btn-info" th:href="@{/admin/{id}/edit(id=${user.id})}">Edit</a></td>
+															<td>
+																<form th:method="DELETE" th:action="@{/admin/{id}(id=${user.id})}" >
+																	<input class="btn btn-danger" type="submit" value="Delete">
+																</form>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<!-- Конец UsersTable -->
+
+									<!-- New User -->
+									<div class="tab-pane fade" id="newUser" role="tabpanel" aria-labelledby="newUser-tab">
+										<div class="card">
+											<h5 class="card-header h5">Add new user</h5>
+											<div class="card-body">
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Конец страницы Admin -->
+
+
+
+
+
+					<!-- Страница User - боковое меню -->
+					<div class="tab-pane fade" id="v-pills-user" role="tabpanel" aria-labelledby="v-pills-user-tab">
+						<div></div>
+					</div>
+				</div>
+			</row>
+		</div>
+	</div>
 </div>
 
 

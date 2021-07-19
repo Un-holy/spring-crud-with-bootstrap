@@ -29,8 +29,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		// 2 способ
 		User user = userService.findUserByEmailWithRolesEager(email);
-		System.out.println(user.getRoles());
-
 		if (Objects.isNull(user)) {
 			throw new UsernameNotFoundException(String.format("User %s not found", user));
 		}
