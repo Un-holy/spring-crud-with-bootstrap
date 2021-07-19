@@ -26,13 +26,15 @@ public class AdminController {
 	}
 
 	@GetMapping("admin")
-	public String findAll(Model model, @AuthenticationPrincipal UserDetails u) {
+	public String findAll(Model model, @AuthenticationPrincipal UserDetails u, User user) {
 		//TODO закэшировать роли в userService
 		Collection<String> roles = new HashSet<>();
 		u.getAuthorities().forEach(a -> roles.add(a.getAuthority().substring(5)));
 		model.addAttribute("users", userService.findAll());
 		model.addAttribute("authUser", u);
 		model.addAttribute("roles", roles);
+		model.addAttribute("roleAdmin", roleService.findRoleById(1L));
+		model.addAttribute("roleUser", roleService.findRoleById(2L));
 		return "admin/users";
 	}
 
@@ -46,13 +48,13 @@ public class AdminController {
 	@PostMapping("admin/new")
 	public String createNewUser(User user) {
 		userService.saveUser(user);
-		return "redirect:/admin/";
+		return "redirect:/admin";
 	}
 
 	@DeleteMapping("admin/{id}")
 	public String deleteUser(@PathVariable("id") long id) {
 		userService.deleteById(id);
-		return "redirect:/admin/";
+		return "redirect:/admin";
 	}
 
 	@GetMapping("admin/{id}/edit")
