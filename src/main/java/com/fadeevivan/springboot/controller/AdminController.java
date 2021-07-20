@@ -61,9 +61,12 @@ public class AdminController {
 	public String createEditForm(@PathVariable("id") long id, Model model,
 								 @AuthenticationPrincipal UserDetails u) {
 		// TODO как исправить дублирование кода?
+		System.out.println("Inner: admin/id/edit");
 		Collection<String> roles = new HashSet<>();
 		u.getAuthorities().forEach(a -> roles.add(a.getAuthority().substring(5)));
 		model.addAttribute("user", userService.findById(id));
+		// TODO delete this
+		System.out.println(userService.findById(id));
 		model.addAttribute("authUser", u);
 		model.addAttribute("roles", roles);
 		return "admin/edit";

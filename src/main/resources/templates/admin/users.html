@@ -6,6 +6,7 @@
 	<title>Users table</title>
 </head>
 <body>
+<div th:replace="~{admin/modal-edit::modal-edit}"/>
 <div th:replace="~{navbar.html::logout}"/>
 
 <div class="container-fluid">
@@ -63,9 +64,13 @@
 															<td th:text="${user.age}">Age</td>
 															<td th:text="${user.email}">Email</td>
 															<td>
-																<span th:each="role : ${user.roles}"><span th:text="${role} + ' '">Role</span></span>
+																<span th:each="role : ${user.roles}"><span th:text="${role} ">Role</span></span>
 															</td>
-															<td><a class="btn btn-info" th:href="@{/admin/{id}/edit(id=${user.id})}">Edit</a></td>
+															<td>
+																<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit">
+																	Edit
+																</button>
+															</td>
 															<td>
 																<form th:method="DELETE" action="#" th:action="@{/admin/{id}(id=${user.id})}" >
 																	<input class="btn btn-danger" type="submit" value="Delete">

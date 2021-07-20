@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/webjars/bootstrap/4.5.3/css/bootstrap.min.css">
+	<title>Edit</title>
+</head>
+<body>
+<!-- Модальное окно -->
+<div th:fragment="modal-edit" class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="modalEdit" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="editModalLabel">Edit user</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form method="POST" th:method="PATCH" action="#" th:action="@{/admin/{id}/edit(id=${user.getId()})}"  th:object="${user}">
+					<div class="col-6 mx-auto">
+						<div class="form-group d-flex flex-column">
+							<label class="text-center font-weight-bold" for="newFirstName">First name</label>
+							<input class="form-control form-control-sm" type="text" th:field="*{firstName}" id="newFirstName" required>
+						</div>
+						<div class="form-group d-flex flex-column">
+							<label class="text-center font-weight-bold" for="newLastName">Last name</label>
+							<input class="form-control form-control-sm" type="text" th:field="*{lastName}" id="newLastName" required>
+						</div>
+						<div class="form-group d-flex flex-column">
+							<label class="text-center font-weight-bold" for="newAge">Age</label>
+							<input class="form-control form-control-sm" type="text" th:field="*{age}" id="newAge">
+						</div>
+						<div class="form-group d-flex flex-column">
+							<label class="text-center font-weight-bold" for="newEmail">Email</label>
+							<input class="form-control form-control-sm" type="text" th:field="*{email}" id="newEmail" required>
+						</div>
+						<div class="form-group d-flex flex-column">
+							<label class="text-center font-weight-bold" for="newPassword">Password</label>
+							<input class="form-control form-control-sm" type="password" th:field="*{password}" id="newPassword" required>
+						</div>
+						<div class="form-group d-flex justify-content-between">
+							<div>
+								<input class="form-check-input" type="checkbox" th:field="*{roles}" th:value="${roleAdmin.id}" id="newAdmin">
+								<label class="form-check-label" for="admin">Admin</label>
+							</div>
+							<div>
+								<input class="form-check-input" type="checkbox" th:field="*{roles}" th:value="${roleUser.id}" id="newUser">
+								<label class="form-check-label" for="user">User</label>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Edit</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script src="webjars/jquery/3.5.1/jquery.min.js" ></script>
+<script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+</body>
+</html>
