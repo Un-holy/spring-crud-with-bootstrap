@@ -67,7 +67,7 @@
 																<span th:each="role : ${user.roles}"><span th:text="${role} + ' '">Role</span></span>
 															</td>
 															<td>
-																<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEdit" th:attr="data-id=${user.id}, data-name=${user.firstName}, data-lname=${user.lastName}, data-age=${user.age}, data-email=${user.email},data-password=${user.password}, data-roles=${user.getRoles()}">
+																<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEdit" th:attr="data-id=${user.id}, data-name=${user.firstName}, data-lname=${user.lastName}, data-age=${user.age}, data-email=${user.email},data-password=${user.password}, data-roles=${user.roles}">
 																	Edit
 																</button>
 															</td>
@@ -114,7 +114,7 @@
 														<div class="d-flex flex-column">
 															<label class="text-center font-weight-bold" for="rolesSelector">Role</label>
 															<select class="custom-select" size="2" th:field="*{roles}" multiple required id="rolesSelector">
-																<option th:each="role : ${allRoles}" th:value="${role.id}" th:text="${role.toString()}">Role</option>
+																<option th:each="role : ${user.roles}" th:value="${role.id}" th:text="${role.toString()}">Role</option>
 															</select>
 														</div>
 														<div class="form-group mt-3">
