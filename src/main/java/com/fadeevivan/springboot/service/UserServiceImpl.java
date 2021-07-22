@@ -57,5 +57,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findUserByEmailWithRolesEager(String email) {
 		return userRepository.findUserByEmailWithRolesEager(email);
+
 	}
 }

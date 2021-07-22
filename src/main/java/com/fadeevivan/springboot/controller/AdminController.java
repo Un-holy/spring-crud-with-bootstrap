@@ -35,6 +35,7 @@ public class AdminController {
 		model.addAttribute("roles", roles);
 		model.addAttribute("roleAdmin", roleService.findRoleById(1L));
 		model.addAttribute("roleUser", roleService.findRoleById(2L));
+		model.addAttribute("allRoles", roleService.findAllRoles());
 		return "admin/users";
 	}
 
