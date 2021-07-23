@@ -7,7 +7,7 @@
 		<div>
 			<span class="text-white font-weight-bold align-middle" th:text="${authUser.username}">Email</span>
 			<span class="text-white align-middle">with roles:</span>
-			<span th:each="role : ${roles}">
+			<span th:each="role : ${authRoles}">
 				<span class="text-white font-weight-normal align-middle" th:text="${role}">authorities</span>
 			</span>
 		</div>

@@ -101,7 +101,7 @@
 														</div>
 														<div class="form-group d-flex flex-column">
 															<label class="text-center font-weight-bold" for="Age">Age</label>
-															<input class="form-control form-control-sm" type="text" th:field="*{age}" id="Age">
+															<input class="form-control form-control-sm" type="number" min="1" max="120" th:field="*{age}" id="Age">
 														</div>
 														<div class="form-group d-flex flex-column">
 															<label class="text-center font-weight-bold" for="email">Email</label>
@@ -114,7 +114,7 @@
 														<div class="d-flex flex-column">
 															<label class="text-center font-weight-bold" for="rolesSelector">Role</label>
 															<select class="custom-select" size="2" th:field="*{roles}" multiple required id="rolesSelector">
-																<option th:each="role : ${user.roles}" th:value="${role.id}" th:text="${role.toString()}">Role</option>
+																<option th:each="role : ${allRoles}" th:value="${role.id}" th:text="${role.toString()}">Role</option>
 															</select>
 														</div>
 														<div class="form-group mt-3">
