@@ -5,6 +5,7 @@ import com.fadeevivan.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -26,18 +27,12 @@ public class UserController {
 	}
 
 	@GetMapping()
-	public String redirect(@AuthenticationPrincipal User authUser) {
-		long id = userService.findUserByEmail(authUser.getUsername()).getId();
-		return "redirect:/user/" + id;
-	}
-
-	@GetMapping("/{id}")
-	public String showUserPage(@PathVariable("id") long id, Model model, @AuthenticationPrincipal User authUser) {
+	public String showUserPage(Model model, @AuthenticationPrincipal UserDetails u, User user) {
 		Collection<String> roles = new HashSet<>();
-		authUser.getAuthorities().forEach(a -> roles.add(a.getAuthority().substring(5)));
-		model.addAttribute("user", userService.findById(id));
-		model.addAttribute("authUser", authUser);
-		model.addAttribute("roles", roles);
-		return "user/show";
+		u.getAuthorities().forEach(a -> roles.add(a.getAuthority().substring(5)));
+		model.addAttribute("userInfo", userService.findUserByEmail(u.getUsername()));
+		model.addAttribute("authUser", u);
+		model.addAttribute("authRoles", roles);
+		return "user/user";
 	}
 }

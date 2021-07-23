@@ -15,8 +15,10 @@
 		<div class="col-md-2 d-flex flex-column pl-0">
 			<!-- Начало первого (бокового) таблиста-->
 			<div class="nav flex-column nav-pills" id="aSide-menu" role="tablist" aria-orientation="vertical">
-				<a class="nav-link active" id="v-pills-admin-tab" data-toggle="pill" href="#v-pills-admin" role="tab" aria-controls="v-pills-admin" aria-selected="true">Admin</a>
-				<a class="nav-link" id="v-pills-user-tab" data-toggle="pill" href="#v-pills-user" role="tab" aria-controls="v-pills-user" aria-selected="false">User</a>
+				<a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link active" id="v-pills-admin-tab" data-toggle="pill"
+				   href="#v-pills-admin" role="tab" aria-controls="v-pills-admin" aria-selected="true">Admin</a>
+				<a sec:authorize="hasRole('ROLE_USER')" class="nav-link" id="v-pills-user-tab" data-toggle="pill"
+				   href="#v-pills-user" role="tab" aria-controls="v-pills-user" aria-selected="false">User</a>
 			</div>
 		</div>
 		<!-- Контент бокового таблиста -->
@@ -24,15 +26,18 @@
 			<row>
 				<div class="tab-content" id="aSide-menu-tabContent">
 					<!-- Страница Admin -->
-					<div class="tab-pane fade show active" id="v-pills-admin" role="tabpanel" aria-labelledby="v-pills-admin-tab">
+					<div sec:authorize="hasRole('ROLE_ADMIN')" class="tab-pane fade show active" id="v-pills-admin" role="tabpanel" aria-labelledby="v-pills-admin-tab">
 						<h2 class="font-weight-bold">Admin panel</h2>
-						<!-- Второй (основной) таблист -->
+
+						<!-- Вкладки -->
 						<ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
 							<li class="nav-item" role="presentation">
-								<a class="nav-link active" id="usersTable-tab" data-toggle="tab" href="#usersTable" role="tab" aria-controls="usersTable" aria-selected="true">Users table</a>
+								<a class="nav-link active" id="usersTable-tab" data-toggle="tab" href="#usersTable"
+								   role="tab" aria-controls="usersTable" aria-selected="true">Users table</a>
 							</li>
 							<li class="nav-item" role="presentation">
-								<a class="nav-link" id="newUser-tab" data-toggle="tab" href="#newUser" role="tab" aria-controls="newUser" aria-selected="false">New User</a>
+								<a class="nav-link" id="newUser-tab" data-toggle="tab" href="#newUser"
+								   role="tab" aria-controls="newUser" aria-selected="false">New User</a>
 							</li>
 						</ul>
 
@@ -40,121 +45,38 @@
 							<div class="col">
 								<div class="tab-content" id="myTab">
 									<!-- Users Table -->
-									<div class="tab-pane fade show active" id="usersTable" role="tabpanel" aria-labelledby="usersTable-tab">
-										<div class="card w-100">
-											<h5 class="card-header h5">All users</h5>
-											<div class="card-body">
-												<table class="table table-hover w-100">
-													<thead>
-														<tr>
-															<th>ID</th>
-															<th>First name</th>
-															<th>Last name</th>
-															<th>Age</th>
-															<th>Email</th>
-															<th>Role</th>
-															<th>Edit</th>
-															<th>Delete</th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr th:each="user : ${users}">
-															<td th:text="${user.id}">ID</td>
-															<td th:text="${user.firstName}">First name</td>
-															<td th:text="${user.lastName}">Last name</td>
-															<td th:text="${user.age}">Age</td>
-															<td th:text="${user.email}">Email</td>
-															<td>
-																<span th:each="role : ${user.roles}"><span th:text="${role} + ' '">Role</span></span>
-															</td>
-															<td>
-																<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEdit"
-																		th:attr="data-id=${user.id}, data-name=${user.firstName}, data-lname=${user.lastName},
-																		data-age=${user.age}, data-email=${user.email},data-password=${user.password}, data-roles=${user.roles}">
-																	Edit
-																</button>
-															</td>
-															<td>
-																<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"
-																		th:attr="data-id=${user.id}, data-name=${user.firstName}, data-lname=${user.lastName},
-																		data-age=${user.age}, data-email=${user.email},data-password=${user.password}, data-roles=${user.roles}">
-																	Delete
-																</button>
-															</td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										</div>
+									<div class="tab-pane fade show active" id="usersTable"
+										 role="tabpanel" aria-labelledby="usersTable-tab">
+										<!-- users-table.html -->
+										<div th:replace="~{admin/users-table::users-table}"/>
 									</div>
 									<!-- Конец UsersTable -->
 
 									<!-- New User -->
 									<div class="tab-pane fade" id="newUser" role="tabpanel" aria-labelledby="newUser-tab">
-										<div class="card">
-											<h5 class="card-header h5">Add new user</h5>
-											<div class="card-body">
-												<div class="col-lg-3 mx-auto">
-													<form method="POST" action="#" th:action="@{/admin/new}" th:object="${user}">
-														<div class="form-group d-flex flex-column">
-															<label class="text-center font-weight-bold" for="firstName">First name</label>
-															<input class="form-control form-control-sm" type="text" th:field="*{firstName}" id="firstName" required>
-														</div>
-														<div class="form-group d-flex flex-column">
-															<label class="text-center font-weight-bold" for="lastName">Last name</label>
-															<input class="form-control form-control-sm" type="text" th:field="*{lastName}" id="lastName" required>
-														</div>
-														<div class="form-group d-flex flex-column">
-															<label class="text-center font-weight-bold" for="Age">Age</label>
-															<input class="form-control form-control-sm" type="number" min="1" max="120" th:field="*{age}" id="Age">
-														</div>
-														<div class="form-group d-flex flex-column">
-															<label class="text-center font-weight-bold" for="email">Email</label>
-															<input class="form-control form-control-sm" type="text" th:field="*{email}" id="email" required>
-														</div>
-														<div class="form-group d-flex flex-column">
-															<label class="text-center font-weight-bold" for="password">Password</label>
-															<input class="form-control form-control-sm" type="password" th:field="*{password}" id="password" required>
-														</div>
-														<div class="d-flex flex-column">
-															<label class="text-center font-weight-bold" for="rolesSelector">Role</label>
-															<select class="custom-select" size="2" th:field="*{roles}" multiple required id="rolesSelector">
-																<option th:each="role : ${allRoles}" th:value="${role.id}" th:text="${role.toString()}">Role</option>
-															</select>
-														</div>
-														<div class="form-group mt-3">
-															<input class="btn btn-success d-block mx-auto" type="submit" value="Add new user">
-														</div>
-
-													</form>
-												</div>
-											</div>
-										</div>
+										<!-- new-user.html -->
+										<div th:replace="~{admin/new-user::new-user}"/>
 									</div>
+									<!-- Конец New User -->
 								</div>
 							</div>
 						</div>
 					</div>
 					<!-- Конец страницы Admin -->
 
-
-
-
-
 					<!-- Страница User - боковое меню -->
-					<div class="tab-pane fade" id="v-pills-user" role="tabpanel" aria-labelledby="v-pills-user-tab">
-						<div></div>
+					<div sec:authorize="hasRole('ROLE_USER')" class="tab-pane fade" id="v-pills-user" role="tabpanel" aria-labelledby="v-pills-user-tab">
+						<h2 class="h2 font-weight-bold mb-3">User information-page</h2>
+
+						<!-- user/user-details.html -->
+						<div th:replace="~{user/user-details::user-details}"></div>
 					</div>
+					<!-- Конец страница User - боковое меню -->
 				</div>
 			</row>
 		</div>
 	</div>
 </div>
-
-
-
-
-
 
 <script type="text/javascript" src="webjars/jquery/3.5.1/jquery.min.js" ></script>
 <script type="text/javascript" src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>

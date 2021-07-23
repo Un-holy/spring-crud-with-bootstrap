@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Users table</title>
+</head>
+<body>
+<div th:fragment="users-table" class="card w-100">
+	<h5 class="card-header h5">All users</h5>
+	<div class="card-body">
+		<table class="table table-hover w-100">
+			<thead>
+			<tr>
+				<th>ID</th>
+				<th>First name</th>
+				<th>Last name</th>
+				<th>Age</th>
+				<th>Email</th>
+				<th>Role</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="user : ${users}">
+				<td th:text="${user.id}">ID</td>
+				<td th:text="${user.firstName}">First name</td>
+				<td th:text="${user.lastName}">Last name</td>
+				<td th:text="${user.age}">Age</td>
+				<td th:text="${user.email}">Email</td>
+				<td>
+					<span th:each="role : ${user.roles}"><span th:text="${role} + ' '">Role</span></span>
+				</td>
+				<td>
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEdit"
+							th:attr="data-id=${user.id}, data-name=${user.firstName}, data-lname=${user.lastName},
+									data-age=${user.age}, data-email=${user.email},data-password=${user.password}, data-roles=${user.roles}">
+						Edit
+					</button>
+				</td>
+				<td>
+					<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"
+							th:attr="data-id=${user.id}, data-name=${user.firstName}, data-lname=${user.lastName},
+									data-age=${user.age}, data-email=${user.email},data-password=${user.password}, data-roles=${user.roles}">
+						Delete
+					</button>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/webjars/bootstrap/4.5.3/css/bootstrap.min.css">
+	<title>Users page</title>
+</head>
+<body>
+<header th:replace="~{navbar.html::logout}"/>
+
+<div class="container-fluid">
+	<div class="row mt-3">
+		<div class="col-md-2 d-flex flex-column pl-0">
+			<!-- User - боковое меню -> меню -->
+			<div class="nav flex-column nav-pills" id="aSide-menu" role="tablist" aria-orientation="vertical">
+				<a class="nav-link show active" id="v-pills-user-tab" data-toggle="pill" href="#v-pills-user" role="tab"
+				   aria-controls="v-pills-user" aria-selected="true">User</a>
+			</div>
+		</div>
+		<!-- Контент бокового таблиста -->
+		<div class="col">
+			<row>
+				<div class="tab-content" id="aSide-menu-tabContent">
+					<!-- Страница User - боковое меню -->
+					<div class="tab-pane fade show active" id="v-pills-user"
+						 			role="tabpanel" aria-labelledby="v-pills-user-tab">
+						<h2 class="h2 font-weight-bold mb-3">User information-page</h2>
+						<div th:replace="~{user/user-details::user-details}"></div>
+					</div>
+					<!-- Конец страница User - боковое меню -->
+				</div>
+			</row>
+		</div>
+		<!-- Конец контент бокового таблиста -->
+	</div>
+</div>
+</body>
+</html>

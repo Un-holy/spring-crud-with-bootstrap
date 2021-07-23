@@ -32,6 +32,7 @@ public class AdminController {
 		Collection<String> roles = new HashSet<>();
 		u.getAuthorities().forEach(a -> roles.add(a.getAuthority().substring(5)));
 		model.addAttribute("users", userService.findAll());
+		model.addAttribute("userInfo", userService.findUserByEmail(u.getUsername()));
 		model.addAttribute("authUser", u);
 		model.addAttribute("authRoles", roles);
 		model.addAttribute("roleAdmin", roleService.findRoleById(1L));
