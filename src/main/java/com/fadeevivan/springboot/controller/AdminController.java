@@ -53,12 +53,6 @@ public class AdminController {
 		return "redirect:/admin";
 	}
 
-	@DeleteMapping("admin/{id}")
-	public String deleteUser(@PathVariable("id") long id) {
-		userService.deleteById(id);
-		return "redirect:/admin";
-	}
-
 //	@GetMapping("admin/{id}/edit")
 //	public String createEditForm(@PathVariable("id") long id, Model model,
 //								 @AuthenticationPrincipal UserDetails u) {
@@ -77,6 +71,12 @@ public class AdminController {
 	@PatchMapping("admin/update")
 	public String editUser(@ModelAttribute("user") User user) {
 		userService.saveUser(user);
+		return "redirect:/admin";
+	}
+
+	@DeleteMapping("admin/delete")
+	public String deleteUser(@ModelAttribute("user") User user) {
+		userService.deleteById(user.getId());
 		return "redirect:/admin";
 	}
 }
