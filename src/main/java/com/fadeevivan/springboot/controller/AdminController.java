@@ -41,33 +41,11 @@ public class AdminController {
 		return "admin/users";
 	}
 
-//	@GetMapping("admin/new")
-//	public String createUserFrom(User user, Model model) {
-//		model.addAttribute("roleAdmin", roleService.findRoleById(1L));
-//		model.addAttribute("roleUser", roleService.findRoleById(2L));
-//		return "admin/new";
-//	}
-
 	@PostMapping("admin/new")
 	public String createNewUser(User user) {
 		userService.saveUser(user);
 		return "redirect:/admin";
 	}
-
-//	@GetMapping("admin/{id}/edit")
-//	public String createEditForm(@PathVariable("id") long id, Model model,
-//								 @AuthenticationPrincipal UserDetails u) {
-//		// TODO как исправить дублирование кода?
-//		System.out.println("Inner: admin/id/edit");
-//		Collection<String> roles = new HashSet<>();
-//		u.getAuthorities().forEach(a -> roles.add(a.getAuthority().substring(5)));
-//		model.addAttribute("user", userService.findById(id));
-//		// TODO delete this
-//		System.out.println(userService.findById(id));
-//		model.addAttribute("authUser", u);
-//		model.addAttribute("roles", roles);
-//		return "admin/edit";
-//	}
 
 	@PatchMapping("admin/update")
 	public String editUser(@ModelAttribute("user") User user) {
