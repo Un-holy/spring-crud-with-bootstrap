@@ -88,12 +88,10 @@ public class AdminRestController {
 		return ResponseEntity.created(uri).body(created);
 	}
 
-	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	//@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void update(@RequestBody User user,@PathVariable long id) {
-		//TODO delete
 		user.setRoles(roleService.findAllUserRoles(user));
-		System.out.println(user.getRoles());
 		userService.saveUser(user);
 	}
 

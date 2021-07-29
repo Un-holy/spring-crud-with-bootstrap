@@ -34,19 +34,19 @@ async function getUsersTable() {
                         <td>
                             ${user.id}
                         </td>
-                        <td>
+                        <td name="editFirstName">
                             ${user.firstName}
                         </td>
-                        <td>
+                        <td name="editLastName">
                             ${user.lastName}
                         </td>
-                        <td>
+                        <td name="editAge">
                             ${user.age}
                         </td>
-                        <td>
+                        <td name="editEmail">
                             ${user.email}
                         </td>
-                        <td>
+                        <td name="editRoles">
                         </td>
                     </tr>
                 `);
@@ -80,19 +80,20 @@ async function getUsersTable() {
                 $('#modalEdit #editPassword').val(user.password);
                 $('#modalEdit option').prop('selected', false)
                 $('#modalEdit #editRolesSelector').empty();
-                $('#modalEdit #editRolesSelector').append(`<option value="ROLE_ADMIN">ADMIN</option>`)
-                $('#modalEdit #editRolesSelector').append(`<option value="ROLE_USER">USER</option>`)
+                $('#modalEdit #editRolesSelector').append(`<option id="roleA" value="ROLE_ADMIN" requared>ADMIN</option>`)
+                $('#modalEdit #editRolesSelector').append(`<option id="roleU" value="ROLE_USER" requared>USER</option>`)
 
-                // roleField = $('#modalEdit select').val();
-                // console.log(roleField)
-                // for (const role of user.roles) {
-                //    // $('#modalEdit select').append(`<option value="${role.roleName}">${role.roleName.substring(5)}</option>`)
-                //
-                //
-                //     if (role.roleName === roleField) {
-                //         $('#modalEdit option').prop('selected', true);
-                //     }
-                // }
+                roleA = $('#roleA').val();
+                roleU = $('#roleU').val();
+
+                for (const role of user.roles) {
+                    if (role.roleName === roleA) {
+                        $('#modalEdit #roleA').prop('selected', true);
+                    }
+                    if (role.roleName === roleU) {
+                        $('#modalEdit #roleU').prop('selected', true);
+                    }
+                }
             });
     });
 
@@ -109,19 +110,29 @@ async function getUsersTable() {
             roles: $('#modalEdit select').val()
         };
 
-        // console.log(user);
-        // console.log(JSON.stringify(user));
-
         let response = await fetch('/admin/users/' + user.id, {
-            method: 'PUT',
+            method: 'PATCH',
             headers: {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(user),
         });
-        let data = await response.json();
 
+        $('#usersTableContent #tr-' + user.id + " td[name = 'editFirstName']").html(user.firstName);
+        $('#usersTableContent #tr-' + user.id + " td[name = 'editLastName']").html(user.lastName);
+        $('#usersTableContent #tr-' + user.id + " td[name = 'editAge']").html(user.age);
+        $('#usersTableContent #tr-' + user.id + " td[name = 'editEmail']").html(user.email);
+        $('#usersTableContent #tr-' + user.id + " td[name = 'editRoles']").empty();
+
+        user.roles.forEach(role => {
+            $('#usersTableContent #tr-' + user.id + " td[name = 'editRoles']").append(`
+                <span>${role.substring(5)}</span>
+            `)
+        });
+
+        $("div#modalEdit").modal('hide');
     });
 }
+
 
 getUsersTable();
