@@ -1,6 +1,5 @@
 package com.fadeevivan.springboot.service;
 
-import com.fadeevivan.springboot.model.Role;
 import com.fadeevivan.springboot.model.User;
 import com.fadeevivan.springboot.repository.RoleRepository;
 import com.fadeevivan.springboot.repository.UserRepository;
@@ -25,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findById(long id) {
-		return userRepository.getById(id);
+		return userRepository.findById(id).get();
 	}
 
 	@Override

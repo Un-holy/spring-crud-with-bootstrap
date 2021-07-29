@@ -11,5 +11,7 @@ import java.util.List;
 
 public interface RoleService {
 	Role findRoleById(long id);
+	Role findRoleByRoleName(String roleName);
 	public List<Role> findAllRoles();
+	public Collection<Role> findAllUserRoles(User user);
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -28,5 +29,17 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public List<Role> findAllRoles() {
 		return roleRepository.findAll();
+	}
+
+	@Override
+	public Role findRoleByRoleName(String roleName) {
+		return roleRepository.findRoleByRoleName(roleName);
+	}
+
+	@Override
+	public Collection<Role> findAllUserRoles(User user) {
+		Collection<Role> roles = new HashSet<>();
+		user.getRoles().stream().forEach(r -> roles.add(findRoleByRoleName(r.getRoleName())));
+		return roles;
 	}
 }

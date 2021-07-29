@@ -1,5 +1,6 @@
 package com.fadeevivan.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,6 +14,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.*;
+
+@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, isGetterVisibility = NONE, setterVisibility = NONE)
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -144,7 +148,8 @@ public class User implements UserDetails {
 				", lastName='" + lastName + '\'' +
 				", age=" + age +
 				", password='" + password + '\'' +
-				'}';
+				'}' +
+				", roles=" + roles;
 	}
 
 	@Override
