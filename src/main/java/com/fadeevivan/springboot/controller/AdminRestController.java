@@ -80,12 +80,14 @@ public class AdminRestController {
 	}
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> create(@RequestBody User user) {
+	public User create(@RequestBody User user) {
+		user.setRoles(roleService.findAllUserRoles(user));
 		User created = userService.saveUser(user);
-		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-				.path(REST_URL + "/{id}")
-				.buildAndExpand(created.getId()).toUri();
-		return ResponseEntity.created(uri).body(created);
+//		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+//				.path(REST_URL + "/{id}")
+//				.buildAndExpand(created.getId()).toUri();
+//		return ResponseEntity.created(uri).body(created);
+		return created;
 	}
 
 	@PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
