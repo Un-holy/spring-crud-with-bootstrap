@@ -7,20 +7,9 @@ import com.fadeevivan.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -36,41 +25,8 @@ public class AdminRestController {
 		this.roleService = roleService;
 	}
 
-//	@GetMapping("admin")
-//	public String findAll(Model model, @AuthenticationPrincipal UserDetails u, User user) {
-//		Collection<String> roles = new HashSet<>();
-//		u.getAuthorities().forEach(a -> roles.add(a.getAuthority().substring(5)));
-//		model.addAttribute("users", userService.findAll());
-//		model.addAttribute("userInfo", userService.findUserByEmail(u.getUsername()));
-//		model.addAttribute("authUser", u);
-//		model.addAttribute("authRoles", roles);
-//		model.addAttribute("roleAdmin", roleService.findRoleById(1L));
-//		model.addAttribute("roleUser", roleService.findRoleById(2L));
-//		model.addAttribute("allRoles", roleService.findAllRoles());
-//		return "admin/users";
-//	}
-//
-//	@PostMapping("admin/new")
-//	public String createNewUser(User user) {
-//		userService.saveUser(user);
-//		return "redirect:/admin";
-//	}
-//
-//	@PutMapping("admin/update")
-//	public String editUser(@ModelAttribute("user") User user) {
-//		userService.saveUser(user);
-//		return "redirect:/admin";
-//	}
-//
-//	@DeleteMapping("admin/delete")
-//	public String deleteUser(@ModelAttribute("user") User user) {
-//		userService.deleteById(user.getId());
-//		return "redirect:/admin";
-//	}
-
 	@GetMapping
 	public List<User> getAll() {
-		System.out.println("Method getAll from REST invoked");
 		return userService.findAll();
 	}
 
@@ -83,15 +39,11 @@ public class AdminRestController {
 	public User create(@RequestBody User user) {
 		user.setRoles(roleService.findAllUserRoles(user));
 		User created = userService.saveUser(user);
-//		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-//				.path(REST_URL + "/{id}")
-//				.buildAndExpand(created.getId()).toUri();
-//		return ResponseEntity.created(uri).body(created);
 		return created;
 	}
 
 	@PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	//@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void update(@RequestBody User user,@PathVariable long id) {
 		user.setRoles(roleService.findAllUserRoles(user));
 		userService.saveUser(user);
@@ -101,10 +53,5 @@ public class AdminRestController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable long id) {
 		userService.deleteById(id);
-	}
-
-	@GetMapping("/by")
-	public User getByEmail(@RequestParam String email) {
-		return userService.findUserByEmail(email);
 	}
 }

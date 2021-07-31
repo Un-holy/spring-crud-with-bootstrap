@@ -28,6 +28,7 @@ public class UserController {
 
 	@GetMapping()
 	public String showUserPage(Model model, @AuthenticationPrincipal UserDetails u, User user) {
+		System.out.println("user controller invoked");
 		Collection<String> roles = new HashSet<>();
 		u.getAuthorities().forEach(a -> roles.add(a.getAuthority().substring(5)));
 		model.addAttribute("userInfo", userService.findUserByEmail(u.getUsername()));

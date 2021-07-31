@@ -40,6 +40,7 @@ public class LoginController {
 	public String  getAdminPage(Model model, @AuthenticationPrincipal UserDetails u) {
 		Collection<String> roles = new HashSet<>();
 		u.getAuthorities().forEach(a -> roles.add(a.getAuthority().substring(5)));
+		model.addAttribute("userInfo", userService.findUserByEmail(u.getUsername()));
 		model.addAttribute("authUser", u);
 		model.addAttribute("authRoles", roles);
 		return "admin/index";

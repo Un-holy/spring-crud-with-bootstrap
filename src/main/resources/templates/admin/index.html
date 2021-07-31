@@ -68,8 +68,30 @@
 					<div sec:authorize="hasRole('ROLE_USER')" class="tab-pane fade" id="v-pills-user" role="tabpanel" aria-labelledby="v-pills-user-tab">
 						<h2 class="h2 font-weight-bold mb-3">User information-page</h2>
 
-						<!-- user/user-details.html -->
-						<div th:replace="~{user/user-details::user-details}"></div>
+						<div class="card-body">
+							<table class="table table-hover w-100">
+								<thead>
+								<tr>
+									<th>ID</th>
+									<th>First name</th>
+									<th>Last name</th>
+									<th>Age</th>
+									<th>Email</th>
+									<th>Role</th>
+								</tr>
+								</thead>
+								<tbody>
+									<td th:text="${userInfo.id}"></td>
+									<td th:text="${userInfo.firstName}"></td>
+									<td th:text="${userInfo.lastName}"></td>
+									<td th:text="${userInfo.age}"></td>
+									<td th:text="${userInfo.email}"></td>
+									<td>
+										<span th:each="role : ${authRoles}" th:text="${role + ' '}"></span>
+									</td>
+								</tbody>
+							</table>
+						</div>
 					</div>
 					<!-- Конец страница User - боковое меню -->
 				</div>

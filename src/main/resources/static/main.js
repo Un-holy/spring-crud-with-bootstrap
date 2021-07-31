@@ -1,27 +1,5 @@
-// $('#modalEdit').on('show.bs.modal', function (event) {
-//     let user = $(event.relatedTarget);
-//     $("#modalEdit #editId").val(user.data('id'));
-//     $("#modalEdit #editFirstName").val(user.data('name'));
-//     $("#modalEdit #editLastName").val(user.data('lname'));
-//     $("#modalEdit #editAge").val(user.data('age'));
-//     $("#modalEdit #editEmail").val(user.data('email'));
-//     $("#modalEdit #editPassword").val(user.data('password'));
-//     $("#modalEdit #editRolesSelector").val(user.data('roles'));
-// });
-//
-// $('#modalDelete').on('show.bs.modal', function (event) {
-//     let user = $(event.relatedTarget);
-//     $("#modalDelete #deleteId").val(user.data('id'));
-//     $("#modalDelete #deleteFirstName").val(user.data('name'));
-//     $("#modalDelete #deleteLastName").val(user.data('lname'));
-//     $("#modalDelete #deleteAge").val(user.data('age'));
-//     $("#modalDelete #deleteEmail").val(user.data('email'));
-//     $("#modalDelete #deletePassword").val(user.data('password'));
-//     $("#modalDelete #deleteRolesSelector").val(user.data('roles'));
-// });
-
-
 async function getUsersTable() {
+
     let table = $('#usersTable tbody');
     table.empty();
 
@@ -99,7 +77,7 @@ async function getUsersTable() {
             $("button[name = 'deleteBtn']").on('click', async f => {
                 let btn = f.target;
                 let id = btn.getAttribute('id').substring(11);
-                console.log(id);
+
                 fetch('/admin/users/' + id)
                     .then(response => response.json())
                     .then(user => {
@@ -168,7 +146,7 @@ async function getUsersTable() {
     $('#btnDeleteConfirm').on('click', async f => {
         f.preventDefault();
         let id = $('#modalDelete #deleteId').val();
-        console.log(id);
+
         await fetch('/admin/users/' + id, {
             method: 'DELETE'
         });
@@ -181,7 +159,7 @@ async function getUsersTable() {
 
     $('#newUser #btnNewUserConfirm').on('click', async f => {
         f.preventDefault();
-        console.log('inner click button');
+
         let user = {
             firstName: $('#newUser #newFirstName').val(),
             lastName: $('#newUser #newLastName').val(),
@@ -190,8 +168,6 @@ async function getUsersTable() {
             password: $('#newUser #newPassword').val(),
             roles: $('#newUser #newRolesSelector').val()
         };
-
-        console.log(JSON.stringify(user));
 
         let response = await fetch('/admin/users',{
             method: 'POST',
@@ -202,9 +178,6 @@ async function getUsersTable() {
         });
 
         let savedUser = await response.json();
-
-        console.log(savedUser);
-        console.log(typeof savedUser);
 
         $('#usersTableContent tbody').append(`
                     <tr id="tr-${savedUser.id}">
@@ -284,7 +257,7 @@ async function getUsersTable() {
         $("button[name = 'deleteBtn']").on('click', async f => {
             let btn = f.target;
             let id = btn.getAttribute('id').substring(11);
-            console.log(id);
+
             fetch('/admin/users/' + id)
                 .then(response => response.json())
                 .then(user => {
@@ -312,6 +285,10 @@ async function getUsersTable() {
                     }
                 });
         });
+    });
+
+    $('#aSide-menu #v-pills-user-tab').on('click', async f => {
+        fetch('user/');
     });
 }
 
