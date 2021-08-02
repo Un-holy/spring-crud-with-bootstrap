@@ -7,6 +7,7 @@ import com.fadeevivan.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,20 +27,20 @@ public class AdminRestController {
 	}
 
 	@GetMapping
-	public List<User> getAll() {
-		return userService.findAll();
+	public ResponseEntity<List<User>> getAll() {
+		return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public User get(@PathVariable long id) {
-		return userService.findById(id);
+	public ResponseEntity<User> get(@PathVariable long id) {
+		return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
 	}
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public User create(@RequestBody User user) {
+	public ResponseEntity<User> create(@RequestBody User user) {
 		user.setRoles(roleService.findAllUserRoles(user));
 		User created = userService.saveUser(user);
-		return created;
+		return new ResponseEntity<>(created, HttpStatus.OK);
 	}
 
 	@PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
