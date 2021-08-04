@@ -54,7 +54,7 @@ async function getUsersTable() {
                         $('#modalEdit #editLastName').val(user.lastName);
                         $('#modalEdit #editAge').val(user.age);
                         $('#modalEdit #editEmail').val(user.email);
-                        $('#modalEdit #editPassword').val(user.password);
+                        $('#modalEdit #editPassword').val();
                         $('#modalEdit option').prop('selected', false);
                         $('#modalEdit #editRolesSelector').empty();
                         $('#modalEdit #editRolesSelector').append(`<option id="roleA" value="ROLE_ADMIN" requared>ADMIN</option>`)
@@ -86,11 +86,11 @@ async function getUsersTable() {
                         $('#modalDelete #deleteLastName').empty().val(user.lastName);
                         $('#modalDelete #deleteAge').empty().val(user.age);
                         $('#modalDelete #deleteEmail').empty().val(user.email);
-                        $('#modalDelete #deletePassword').empty().val(user.password);
+                        $('#modalDelete #deletePassword').empty().val();
                         $('#modalDelete option').prop('selected', false);
                         $('#modalDelete #deleteRolesSelector').empty();
-                        $('#modalDelete #deleteRolesSelector').empty().append(`<option id="roleA" value="ROLE_ADMIN" requared>ADMIN</option>`)
-                        $('#modalDelete #deleteRolesSelector').empty().append(`<option id="roleU" value="ROLE_USER" requared>USER</option>`)
+                        $('#modalDelete #deleteRolesSelector').append(`<option id="roleA" value="ROLE_ADMIN" requared>ADMIN</option>`)
+                        $('#modalDelete #deleteRolesSelector').append(`<option id="roleU" value="ROLE_USER" requared>USER</option>`)
 
                         roleA = $('#roleA').val();
                         roleU = $('#roleU').val();
@@ -119,6 +119,8 @@ async function getUsersTable() {
             password: $('#modalEdit #editPassword').val(),
             roles: $('#modalEdit select').val()
         };
+
+        $('#modalEdit #editPassword').val('');
 
         let response = await fetch('/admin/users/' + user.id, {
             method: 'PATCH',
@@ -234,7 +236,7 @@ async function getUsersTable() {
                     $('#modalEdit #editLastName').val(user.lastName);
                     $('#modalEdit #editAge').val(user.age);
                     $('#modalEdit #editEmail').val(user.email);
-                    $('#modalEdit #editPassword').val(user.password);
+                    $('#modalEdit #editPassword').val();
                     $('#modalEdit option').prop('selected', false);
                     $('#modalEdit #editRolesSelector').empty();
                     $('#modalEdit #editRolesSelector').append(`<option id="roleA" value="ROLE_ADMIN" requared>ADMIN</option>`)
@@ -265,12 +267,13 @@ async function getUsersTable() {
                     $('#modalDelete #deleteFirstName').empty().val(user.firstName);
                     $('#modalDelete #deleteLastName').empty().val(user.lastName);
                     $('#modalDelete #deleteAge').empty().val(user.age);
-                    $('#modalDelete #deleteEmail').empty().val(user.email);
+                    $('#modalDelete #deleteEmail').empty().val();
                     $('#modalDelete #deletePassword').empty().val(user.password);
                     $('#modalDelete option').prop('selected', false);
                     $('#modalDelete #deleteRolesSelector').empty();
-                    $('#modalDelete #deleteRolesSelector').empty().append(`<option id="roleA" value="ROLE_ADMIN" requared>ADMIN</option>`)
-                    $('#modalDelete #deleteRolesSelector').empty().append(`<option id="roleU" value="ROLE_USER" requared>USER</option>`)
+                    $('#modalDelete #deleteRolesSelector').append(`<option id="roleA" value="ROLE_ADMIN" requared>ADMIN</option>`)
+                    $('#modalDelete #deleteRolesSelector').
+                    append(`<option id="roleU" value="ROLE_USER" requared>USER</option>`)
 
                     roleA = $('#roleA').val();
                     roleU = $('#roleU').val();
