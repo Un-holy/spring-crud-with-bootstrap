@@ -268,12 +268,11 @@ async function getUsersTable() {
                     $('#modalDelete #deleteLastName').empty().val(user.lastName);
                     $('#modalDelete #deleteAge').empty().val(user.age);
                     $('#modalDelete #deleteEmail').empty().val();
-                    $('#modalDelete #deletePassword').empty().val(user.password);
+                    $('#modalDelete #deletePassword').empty().val('');
                     $('#modalDelete option').prop('selected', false);
                     $('#modalDelete #deleteRolesSelector').empty();
                     $('#modalDelete #deleteRolesSelector').append(`<option id="roleA" value="ROLE_ADMIN" requared>ADMIN</option>`)
-                    $('#modalDelete #deleteRolesSelector').
-                    append(`<option id="roleU" value="ROLE_USER" requared>USER</option>`)
+                    $('#modalDelete #deleteRolesSelector').append(`<option id="roleU" value="ROLE_USER" requared>USER</option>`)
 
                     roleA = $('#roleA').val();
                     roleU = $('#roleU').val();
